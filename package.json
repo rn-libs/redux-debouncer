@@ -1,0 +1,46 @@
+{
+  "name": "redux-react-navigation-debouncer",
+  "version": "1.0.0",
+  "description": "debouncer for react navigation and redux",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava",
+    "build": "npx babel ./index.js -d ./lib",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "react navigation",
+    "navigation debouncer",
+    "redux"
+  ],
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rn-libs/redux-react-navigation-debouncer"
+  },
+  "bugs": {
+    "url": "https://github.com/rn-libs/redux-react-navigation-debouncer/issues"
+  },
+  "author": "Shelomanov Dmitry <userbq201@mail.ru>",
+  "license": "ISC",
+  "homepage": "https://github.com/rn-libs/redux-react-navigation-debouncer#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.4",
+    "@babel/polyfill": "^7.2.5",
+    "@babel/register": "^7.0.0",
+    "ava": "^1.2.1",
+    "sinon": "^7.2.4"
+  },
+  "dependencies": {
+    "@babel/preset-env": "^7.3.4"
+  },
+  "ava": {
+    "require": [
+      "@babel/polyfill",
+      "@babel/register"
+    ]
+  }
+}
