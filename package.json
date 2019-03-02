@@ -2,7 +2,7 @@
   "name": "redux-react-navigation-debouncer",
   "version": "1.0.0",
   "description": "debouncer for react navigation and redux",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "ava",
     "build": "npx babel ./index.js -d ./lib",
