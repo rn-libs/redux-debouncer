@@ -7,7 +7,7 @@
 ### How to use
 
 ```js
-import { makeReduxDebouncer } from 'redux-react-navigation-debouncer'
+import { makeReduxDebouncer } from 'redux-debouncer'
 
 /**
  * type: string,
