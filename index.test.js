@@ -1,40 +1,39 @@
 import test from 'ava'
 import sinon from 'sinon'
-import { debouncerCreator } from './index'
+import { makeReduxDebouncer } from './index'
 
-
-function callMiddleware(fn, next, action) {
-  fn()(next)(action)
-}
 
 test('Call next', (t) => {
   const next = sinon.spy()
-  const action = { type: 'Navigation/NAVIGATE', routeName: 'screen1' }
-  const navigationDebouncer = debouncerCreator()
+  const debouncer = makeReduxDebouncer({ type: 'foo' })
 
-  callMiddleware(navigationDebouncer, next, action)
-
-  t.true(next.callCount === 1)
-})
-
-test('Dont call second next', (t) => {
-  const next = sinon.spy()
-  const action = { type: 'Navigation/NAVIGATE', routeName: 'screen1' }
-  const navigationDebouncer = debouncerCreator()
-
-  callMiddleware(navigationDebouncer, next, action)
+  debouncer()(next)({ type: 'foo' })
 
   t.true(next.callCount === 1)
 })
 
-test('Call second action immediately with another action', (t) => {
+test('Custom type with compare', (t) => {
   const next = sinon.spy()
-  const action = { type: 'Navigation/NAVIGATE', routeName: 'screen1' }
-  const someAction = { type: 'action', routeName: 'screen2' }
-  const navigationDebouncer = debouncerCreator()
+  const debouncer = makeReduxDebouncer({
+    type: 'foo',
+    compare: (current, prev) => current.param === prev.param,
+  })
 
-  callMiddleware(navigationDebouncer, next, action)
-  callMiddleware(navigationDebouncer, next, someAction)
+  debouncer()(next)({ type: 'foo', param: 1 })
+  debouncer()(next)({ type: 'foo', param: 2 })
 
   t.true(next.callCount === 2)
+})
+
+test('Custom type with compare & equals params', (t) => {
+  const next = sinon.spy()
+  const debouncer = makeReduxDebouncer({
+    type: 'foo',
+    compare: (current, prev) => current.param === prev.param,
+  })
+
+  debouncer()(next)({ type: 'foo', param: 1 })
+  debouncer()(next)({ type: 'foo', param: 1 })
+
+  t.true(next.callCount === 1)
 })

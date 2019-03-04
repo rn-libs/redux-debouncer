@@ -1,12 +1,17 @@
-export const debouncerCreator = ({ userTypes = [], interval = 500 } = {}) => {
+const defaultCompare = (currentAction, lastLockedAction) => true
+
+export const makeReduxDebouncer = ({
+  type,
+  interval = 500,
+  compare = defaultCompare } = {}
+) => {
   let navLocked = false
-  let lastRouteName = null
+  let lastLockedAction = {}
   let timerId = null
-  const targetTypes = ['Navigation/NAVIGATE'].concat(userTypes)
 
   return () => (next) => (action) => {
-    if (targetTypes.includes(action.type)) {
-      if (navLocked && lastRouteName === action.routeName) {
+    if (type === action.type) {
+      if (navLocked && compare(action, lastLockedAction)) {
         return
       }
   
@@ -18,10 +23,11 @@ export const debouncerCreator = ({ userTypes = [], interval = 500 } = {}) => {
       timerId = setTimeout(() => {
         navLocked = false
         timerId = null
+        lastLockedAction = {}
       }, interval)
   
       navLocked = true
-      lastRouteName = action.routeName
+      lastLockedAction = action
     }
   
     next(action)
