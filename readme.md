@@ -9,9 +9,10 @@
 ```js
 import { makeReduxDebouncer } from 'redux-react-navigation-debouncer'
 
-
 /**
- * @params { userTypes: [string], interval: number }
+ * type: string,
+ * interval:? number,
+ * compare:? (currentAction: any, prevAction: any) => bool,
  */
 const incrementDebounce = makeReduxDebouncer({ type: 'increment' })
 
